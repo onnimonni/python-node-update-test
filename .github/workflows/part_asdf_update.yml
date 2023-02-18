@@ -8,7 +8,7 @@ on:
         type: string
         default: ""
         required: false
-      release-notes:
+      release_notes:
         type: string
         required: true
 
