@@ -10,6 +10,10 @@ jobs:
   checkAsdfUpdatesPython:
     name: "ASDF Update Python"
 
+    permissions:
+      contents: write
+      pull-requests: write
+
     uses: ./.github/workflows/part_asdf_update.yml
     with:
       plugin: "python"
