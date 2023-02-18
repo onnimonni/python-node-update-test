@@ -1,7 +1,7 @@
 on:
   schedule:
-    # Every Fifteen Minutes
-    - cron: '*/15 * * * *'
+    # Every 5 AM in the morning UTC
+    - cron: '0 5 * * * *'
   workflow_dispatch: {}
 
 name: "Every fifteen minutes"
