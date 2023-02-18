@@ -48,7 +48,7 @@ jobs:
           asdf local "${{ inputs.plugin }}" "${{ env.LATEST_VERSION }}"
       - name: Update latest version to Dockerfile too
         run: |
-          test -z "${{ inputs.docker_image }}" && test -f Dockerfile && sed -i "s/^FROM ${{ inputs.docker_image }}:${{ env.CURRENT_VERSION }}/FROM ${{ inputs.docker_image }}:${{ env.LATEST_VERSION }}/" Dockerfile
+          test -n "${{ inputs.docker_image }}" && test -f Dockerfile && sed -i "s/^FROM ${{ inputs.docker_image }}:${{ env.CURRENT_VERSION }}/FROM ${{ inputs.docker_image }}:${{ env.LATEST_VERSION }}/" Dockerfile
       - uses: peter-evans/create-pull-request@v4
         with:
           add-paths: '.tool-versions,Dockerfile'
