@@ -16,5 +16,6 @@ jobs:
 
     uses: ./.github/workflows/part_asdf_update.yml
     with:
-      plugin: "python"
+      plugin: python
+      docker_image: python
       release_notes: "https://docs.python.org/$MAJOR_VERSION/whatsnew/changelog.html#python-$LATEST_VERSION_WITH_DASHES-final"
