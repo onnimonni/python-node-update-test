@@ -36,7 +36,7 @@ jobs:
           echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
           MAJOR_VERSION=$(echo LATEST_VERSION | cut -d '.' -f 1,2)
           LATEST_VERSION_WITH_DASHES=$(echo LATEST_VERSION | tr . -)
-          eval RELEASE_NOTES="${{ inputs.release_notes }}"
+          RELEASE_NOTES=$(eval echo "${{ inputs.release_notes }}")
           echo "Realese notes available in: $RELEASE_NOTES"
           echo "RELEASE_NOTES=${RELEASE_NOTES}" >> $GITHUB_ENV
       - name: "Try Installing new version"
