@@ -1,4 +1,4 @@
-FROM node:16.18.1 AS frontend
+FROM node:19.6.1 AS frontend
 ADD version.js /build/
 RUN node /build/version.js
 
