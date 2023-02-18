@@ -26,9 +26,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: ASDF Install
-        uses: asdf-vm/actions/install@v1
-      - name: "Get Newest Version"
+      - name: ASDF Setup
+        uses: asdf-vm/actions/setup
+      - name: Get Newest Version
         id: newestVersion
         run: |
           LATEST_VERSION=$(asdf latest "${{ inputs.plugin }}" "${{ inputs.constraint }}")
@@ -38,11 +38,7 @@ jobs:
           LATEST_VERSION_WITH_DASHES=$(echo LATEST_VERSION | tr . -)
           eval RELEASE_NOTES="${{ inputs.release_notes }}"
           echo "RELEASE_NOTES=${RELEASE_NOTES}" >> $GITHUB_ENV
-
-      - name: "Try Installing new version"
-        run: |
-          asdf install "${{ inputs.plugin }}" "${{ env.LATEST_VERSION }}"
-      - name: "Apply latest version to .tool-versions"
+      - name: Apply latest version to .tool-versions
         run: |
           asdf local "${{ inputs.plugin }}" "${{ env.LATEST_VERSION }}"
       - uses: peter-evans/create-pull-request@v4
@@ -51,6 +47,6 @@ jobs:
           commit-message: 'Update ${{ inputs.plugin }} to ${{ env.LATEST_VERSION }}'
           title: 'Update ${{ inputs.plugin }} to ${{ env.LATEST_VERSION }}'
           branch: 'update/${{ inputs.plugin }}/${{ env.LATEST_VERSION }}'
-          body: 'See release notes for in: ${{ env.RELEASE_NOTES }}'
+          body: 'See release notes in: ${{ env.RELEASE_NOTES }}'
           delete-branch: true
           labels: 'update,enhancement'
