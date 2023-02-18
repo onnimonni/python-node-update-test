@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: ASDF Setup
+      - name: ASDF Setup plugins
         uses: asdf-vm/actions/plugins-add@master
       - name: Get Newest Version
         id: newestVersion
@@ -38,6 +38,9 @@ jobs:
           LATEST_VERSION_WITH_DASHES=$(echo LATEST_VERSION | tr . -)
           eval RELEASE_NOTES="${{ inputs.release_notes }}"
           echo "RELEASE_NOTES=${RELEASE_NOTES}" >> $GITHUB_ENV
+      - name: "Try Installing new version"
+        run: |
+          asdf install "${{ inputs.plugin }}" "${{ env.LATEST_VERSION }}"
       - name: Apply latest version to .tool-versions
         run: |
           asdf local "${{ inputs.plugin }}" "${{ env.LATEST_VERSION }}"
