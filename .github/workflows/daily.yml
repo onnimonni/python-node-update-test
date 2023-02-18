@@ -1,0 +1,16 @@
+on:
+  schedule:
+    # Every Fifteen Minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+name: "Every fifteen minutes"
+
+jobs:
+  checkAsdfUpdatesPython:
+    name: "ASDF Update Python"
+
+    uses: ./.github/workflows/part_asdf_update.yml
+    with:
+      plugin: "python"
+      release_notes: "https://docs.python.org/$MAJOR_VERSION/whatsnew/changelog.html#python-$LATEST_VERSION_WITH_DASHES-final"
