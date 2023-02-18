@@ -4,7 +4,7 @@ on:
     - cron: '30 5 * * *'
   workflow_dispatch: {}
 
-name: "Every fifteen minutes"
+name: "Every day"
 
 jobs:
   checkAsdfUpdatesPython:
@@ -18,4 +18,16 @@ jobs:
     with:
       plugin: python
       docker_image: python
-      release_notes: "https://docs.python.org/$MAJOR_VERSION/whatsnew/changelog.html#python-$LATEST_VERSION_WITH_DASHES-final"
+      release_notes: "https://docs.python.org/$MINOR_VERSION/whatsnew/changelog.html#python-$LATEST_VERSION_WITH_DASHES-final"
+  checkAsdfUpdatesNode:
+    name: "ASDF Update Nodejs"
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    uses: ./.github/workflows/part_asdf_update.yml
+    with:
+      plugin: nodejs
+      docker_image: node
+      release_notes: "https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V$MAJOR_VERSION.md#$LATEST_VERSION"

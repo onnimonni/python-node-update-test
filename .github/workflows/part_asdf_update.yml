@@ -9,7 +9,8 @@ on:
         required: true
       docker_image:
         type: string
-        required: true
+        required: false
+        default: ""
 
 name: "ASDF Update"
 
@@ -34,7 +35,8 @@ jobs:
           LATEST_VERSION=$(asdf latest "${{ inputs.plugin }}")
           echo "Updating from $CURRENT_VERSION to $LATEST_VERSION"
           echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
-          MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d '.' -f 1,2)
+          MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d '.' -f 1)
+          MINOR_VERSION=$(echo $LATEST_VERSION | cut -d '.' -f 1,2)
           LATEST_VERSION_WITH_DASHES=$(echo $LATEST_VERSION | tr . -)
           RELEASE_NOTES=$(eval echo "${{ inputs.release_notes }}")
           echo "RELEASE_NOTES=${RELEASE_NOTES}" >> $GITHUB_ENV
@@ -44,12 +46,12 @@ jobs:
       - name: Apply latest version to .tool-versions
         run: |
           asdf local "${{ inputs.plugin }}" "${{ env.LATEST_VERSION }}"
-      - name: Update latest version to Dockerfile too 
+      - name: Update latest version to Dockerfile too
         run: |
-          sed -i "s/^FROM ${{ inputs.docker_image }}:${{ env.CURRENT_VERSION }}/FROM ${{ inputs.docker_image }}:${{ env.LATEST_VERSION }}/" Dockerfile
+          test -z "${{ inputs.docker_image }}" && test -f Dockerfile && sed -i "s/^FROM ${{ inputs.docker_image }}:${{ env.CURRENT_VERSION }}/FROM ${{ inputs.docker_image }}:${{ env.LATEST_VERSION }}/" Dockerfile
       - uses: peter-evans/create-pull-request@v4
         with:
-          add-paths: '.tool-versions'
+          add-paths: '.tool-versions,Dockerfile'
           commit-message: 'Update ${{ inputs.plugin }} from ${{ env.CURRENT_VERSION }} to ${{ env.LATEST_VERSION }}'
           title: 'Update ${{ inputs.plugin }} from ${{ env.CURRENT_VERSION }} to ${{ env.LATEST_VERSION }}'
           branch: 'update/${{ inputs.plugin }}/${{ env.LATEST_VERSION }}'
