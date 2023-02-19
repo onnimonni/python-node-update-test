@@ -27,4 +27,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: swappiehq/github-actions/actions/update-python@main
+      - uses: swappiehq/github-actions/actions/update-nodejs@main
