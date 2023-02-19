@@ -8,18 +8,23 @@ name: "Every day"
 
 jobs:
   checkAsdfUpdatesPython:
-    name: "asdf Update Python"
+    name: "Update asdf Python"
 
     permissions:
       contents: write
       pull-requests: write
 
-    uses: swappiehq/github-actions/actions/update-python@main
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: swappiehq/github-actions/actions/update-python@main
   checkAsdfUpdatesNode:
-    name: "asdf Update Nodejs"
-
+    name: "Update asdf NodeJS"
     permissions:
       contents: write
       pull-requests: write
 
-    uses: swappiehq/github-actions/actions/update-nodejs@main
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: swappiehq/github-actions/actions/update-python@main
