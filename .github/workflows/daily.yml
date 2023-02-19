@@ -8,26 +8,18 @@ name: "Every day"
 
 jobs:
   checkAsdfUpdatesPython:
-    name: "ASDF Update Python"
+    name: "asdf Update Python"
 
     permissions:
       contents: write
       pull-requests: write
 
-    uses: ./.github/workflows/part_asdf_update.yml
-    with:
-      plugin: python
-      docker_image: python
-      release_notes: "https://docs.python.org/$MINOR_VERSION/whatsnew/changelog.html#python-$LATEST_VERSION_WITH_DASHES-final"
+    uses: swappiehq/github-actions/actions/update-python
   checkAsdfUpdatesNode:
-    name: "ASDF Update Nodejs"
+    name: "asdf Update Nodejs"
 
     permissions:
       contents: write
       pull-requests: write
 
-    uses: ./.github/workflows/part_asdf_update.yml
-    with:
-      plugin: nodejs
-      docker_image: node
-      release_notes: "https://github.com/nodejs/node/blob/main/doc/changelogs/CHANGELOG_V$MAJOR_VERSION.md#$LATEST_VERSION"
+    uses: swappiehq/github-actions/actions/update-nodejs
