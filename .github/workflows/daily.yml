@@ -14,7 +14,7 @@ jobs:
       contents: write
       pull-requests: write
 
-    uses: swappiehq/github-actions/actions/update-python
+    uses: swappiehq/github-actions/actions/update-python@main
   checkAsdfUpdatesNode:
     name: "asdf Update Nodejs"
 
@@ -22,4 +22,4 @@ jobs:
       contents: write
       pull-requests: write
 
-    uses: swappiehq/github-actions/actions/update-nodejs
+    uses: swappiehq/github-actions/actions/update-nodejs@main
