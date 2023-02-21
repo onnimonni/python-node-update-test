@@ -4,7 +4,7 @@ on:
     - cron: '30 5 * * *'
   workflow_dispatch: {}
 
-name: "Every day"
+name: "Update asdf and Dockerfile versions"
 
 jobs:
   UpdatesAsdfPython:
@@ -14,7 +14,9 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: swappiehq/github-actions/actions/update-python@main
+      - uses: swappiehq/github-actions/update-python@main
+        with:
+          version: major-updates
   UpdatesAsdfNode:
     name: "Update asdf NodeJS"
     permissions:
@@ -22,4 +24,6 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: swappiehq/github-actions/actions/update-nodejs@main
+      - uses: swappiehq/github-actions/update-nodejs@main
+        with:
+          version: minor-updates
